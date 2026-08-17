@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as ApiPublicTempCleanupRouteImport } from './routes/api/public/temp-cleanup'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +22,31 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicTempCleanupRoute = ApiPublicTempCleanupRouteImport.update({
-  id: '/api/public/temp-cleanup',
-  path: '/api/public/temp-cleanup',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/api/public/temp-cleanup': typeof ApiPublicTempCleanupRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/api/public/temp-cleanup': typeof ApiPublicTempCleanupRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/api/public/temp-cleanup': typeof ApiPublicTempCleanupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/api/public/temp-cleanup'
+  fullPaths: '/' | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/api/public/temp-cleanup'
-  id: '__root__' | '/' | '/admin' | '/api/public/temp-cleanup'
+  to: '/' | '/admin'
+  id: '__root__' | '/' | '/admin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  ApiPublicTempCleanupRoute: typeof ApiPublicTempCleanupRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,20 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/temp-cleanup': {
-      id: '/api/public/temp-cleanup'
-      path: '/api/public/temp-cleanup'
-      fullPath: '/api/public/temp-cleanup'
-      preLoaderRoute: typeof ApiPublicTempCleanupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  ApiPublicTempCleanupRoute: ApiPublicTempCleanupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
