@@ -18,10 +18,13 @@ type Phase = "idle" | "uploading" | "finished";
 
 export function UploadFlow() {
   const { t, lang, clearLang } = useI18n();
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [phase, setPhase] = useState<Phase>("idle");
   const [notice, setNotice] = useState<string | null>(null);
+  const [heartTaps, setHeartTaps] = useState(0);
+
 
   useEffect(
     () => () => {
