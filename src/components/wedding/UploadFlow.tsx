@@ -301,7 +301,7 @@ export function UploadFlow() {
         </section>
       )}
 
-      <footer className="mt-12 flex justify-center pb-4">
+      <footer className="mt-12 flex flex-col items-center gap-2 pb-4">
         <button
           type="button"
           onClick={clearLang}
@@ -309,7 +309,25 @@ export function UploadFlow() {
         >
           {lang === "lt" ? "🇬🇧 English" : "🇱🇹 Lietuvių"} · {t.langSwitchLabel}
         </button>
+        <button
+          type="button"
+          onClick={() => {
+            const next = heartTaps + 1;
+            if (next >= 3) {
+              setHeartTaps(0);
+              void navigate({ to: "/admin" });
+              return;
+            }
+            setHeartTaps(next);
+            window.setTimeout(() => setHeartTaps(0), 1500);
+          }}
+          aria-label={lang === "lt" ? "Gretos ir Mato prieiga" : "Greta & Matas access"}
+          className="rounded-full px-4 py-2 text-xl text-muted-foreground/60"
+        >
+          ❤
+        </button>
       </footer>
+
     </main>
   );
 }
