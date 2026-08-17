@@ -72,7 +72,7 @@ export interface CallAsAppUserParams {
   connectionAPIKey: string;
   connectorId: string;
   path: string;
-  init?: RequestInit;
+  init?: RequestInit | undefined;
 }
 
 export async function callAsAppUser({
