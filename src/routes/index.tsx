@@ -6,7 +6,7 @@ import { LanguageProvider, useI18n } from "@/lib/i18n";
 
 const title = "Greta & Matas — Užfiksuok akimirką";
 const description =
-  "Pasidalinkite gražiausiomis Gretos ir Mato šventės akimirkomis: įkelkite nuotraukas ir vaizdo įrašus vienu paspaudimu.";
+  "Galite iš karto pasirinkti ir kartu įkelti norimas nuotraukas bei vaizdo įrašus.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
