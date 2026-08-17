@@ -120,7 +120,7 @@ const dict = {
     filesCount: (n: number) => `${n} files`,
     adminLoadError: "The list could not be loaded. Please try again.",
   },
-} as const;
+};
 
 export type Dict = (typeof dict)["lt"];
 
