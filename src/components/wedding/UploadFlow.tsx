@@ -11,7 +11,7 @@ type Item = {
   file: File;
   status: Status;
   progress: number;
-  preview?: string;
+  preview?: string | undefined;
 };
 
 type Phase = "idle" | "uploading" | "finished";
