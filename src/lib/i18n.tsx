@@ -65,6 +65,25 @@ const dict = {
     uploadedAt: "Įkelta",
     filesCount: (n: number) => `Failų: ${n}`,
     adminLoadError: "Nepavyko įkelti sąrašo. Bandykite dar kartą.",
+    driveTitle: "Google Diskas",
+    driveNotConnected:
+      "Prijunkite savo Google paskyrą, kad akimirkas galėtumėte nukopijuoti į savo Google Diską.",
+    driveConnected: "Google Diskas prijungtas.",
+    driveConnectedAs: (email: string) => `Prijungta: ${email}`,
+    driveConnect: "Prijungti Google Diską",
+    driveDisconnect: "Atjungti",
+    driveCopy: "Kopijuoti į mano Diską",
+    driveSyncing: "Kopijuojama į jūsų Google Diską…",
+    driveProgress: (done: number, total: number) =>
+      `Nukopijuota ${done} iš ${total} failų…`,
+    driveSyncDone: (total: number) => `Visi ${total} failai nukopijuoti į jūsų Google Diską.`,
+    driveSyncPartial: (done: number, total: number) =>
+      `Nukopijuota ${done} iš ${total}. Kai kurių failų nepavyko – bandykite dar kartą.`,
+    driveSyncError: "Kopijuoti nepavyko. Bandykite dar kartą.",
+    driveConnectError: "Nepavyko prijungti Google Disko. Bandykite dar kartą.",
+    drivePopupBlocked:
+      "Naršyklė užblokavo prisijungimo langą. Leiskite iškylančius langus ir bandykite dar kartą.",
+
   },
   en: {
     langTitle: "Choose your language",
