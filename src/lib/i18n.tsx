@@ -65,6 +65,25 @@ const dict = {
     uploadedAt: "Įkelta",
     filesCount: (n: number) => `Failų: ${n}`,
     adminLoadError: "Nepavyko įkelti sąrašo. Bandykite dar kartą.",
+    driveTitle: "Google Diskas",
+    driveNotConnected:
+      "Prijunkite savo Google paskyrą, kad akimirkas galėtumėte nukopijuoti į savo Google Diską.",
+    driveConnected: "Google Diskas prijungtas.",
+    driveConnectedAs: (email: string) => `Prijungta: ${email}`,
+    driveConnect: "Prijungti Google Diską",
+    driveDisconnect: "Atjungti",
+    driveCopy: "Kopijuoti į mano Diską",
+    driveSyncing: "Kopijuojama į jūsų Google Diską…",
+    driveProgress: (done: number, total: number) =>
+      `Nukopijuota ${done} iš ${total} failų…`,
+    driveSyncDone: (total: number) => `Visi ${total} failai nukopijuoti į jūsų Google Diską.`,
+    driveSyncPartial: (done: number, total: number) =>
+      `Nukopijuota ${done} iš ${total}. Kai kurių failų nepavyko – bandykite dar kartą.`,
+    driveSyncError: "Kopijuoti nepavyko. Bandykite dar kartą.",
+    driveConnectError: "Nepavyko prijungti Google Disko. Bandykite dar kartą.",
+    drivePopupBlocked:
+      "Naršyklė užblokavo prisijungimo langą. Leiskite iškylančius langus ir bandykite dar kartą.",
+
   },
   en: {
     langTitle: "Choose your language",
@@ -119,6 +138,23 @@ const dict = {
     uploadedAt: "Uploaded",
     filesCount: (n: number) => `${n} files`,
     adminLoadError: "The list could not be loaded. Please try again.",
+    driveTitle: "Google Drive",
+    driveNotConnected: "Connect your Google account to copy the memories into your Drive.",
+    driveConnected: "Google Drive is connected.",
+    driveConnectedAs: (email: string) => `Connected as ${email}`,
+    driveConnect: "Connect Google Drive",
+    driveDisconnect: "Disconnect",
+    driveCopy: "Copy to my Drive",
+    driveSyncing: "Copying to your Google Drive…",
+    driveProgress: (done: number, total: number) => `Copied ${done} of ${total} files…`,
+    driveSyncDone: (total: number) => `All ${total} files are now in your Google Drive.`,
+    driveSyncPartial: (done: number, total: number) =>
+      `Copied ${done} of ${total}. Some files failed — please try again.`,
+    driveSyncError: "The copy could not be finished. Please try again.",
+    driveConnectError: "Google Drive could not be connected. Please try again.",
+    drivePopupBlocked:
+      "Your browser blocked the sign-in window. Allow pop-ups and try again.",
+
   },
 };
 
