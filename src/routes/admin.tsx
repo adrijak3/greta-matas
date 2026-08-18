@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 
+import { DrivePanel } from "@/components/wedding/DrivePanel";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageProvider, useI18n } from "@/lib/i18n";
 import { claimAdminIfFirst } from "@/lib/wedding-admin.functions";
+
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
