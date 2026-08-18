@@ -172,8 +172,8 @@ function AdminShell() {
       <DrivePanel />
 
       {error && (
-
         <p role="alert" className="mt-6 rounded-xl bg-secondary px-4 py-3 text-base">
+
           {error}
         </p>
       )}
