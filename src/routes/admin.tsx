@@ -97,12 +97,29 @@ function AdminShell() {
       return;
     }
 
+    const userId = sessionData.session.user.id;
+
+    // Primary check: read the signed-in account's own role row directly (RLS
+    // allows exactly this). No server round-trip, so it works even if the
+    // server function is unavailable on the hosted deployment.
+    const existing = await supabase
+      .from("user_roles")
+      .select("id")
+      .eq("user_id", userId)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (existing.data) {
+      setState("ready");
+      await loadMedia();
+      return;
+    }
+
+    // No role yet: the very first account may still claim organiser access.
     try {
       let result: Awaited<ReturnType<typeof claimAdmin>> | undefined;
       let lastError: unknown;
 
-      // A newly-created browser session can take a moment to become available
-      // to the server-function middleware on hosted deployments.
       for (let attempt = 0; attempt < 3; attempt += 1) {
         try {
           result = await claimAdmin();
@@ -121,9 +138,10 @@ function AdminShell() {
         return;
       }
     } catch {
-      setState("access-error");
+      setState(existing.error ? "access-error" : "no-access");
       return;
     }
+
     setState("ready");
     await loadMedia();
   }, [claimAdmin, loadMedia]);
