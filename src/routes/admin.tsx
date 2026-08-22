@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useState } from "react";
 
 import { DrivePanel } from "@/components/wedding/DrivePanel";
@@ -40,9 +41,10 @@ function AdminPage() {
 
 function AdminShell() {
   const { t } = useI18n();
-  const [state, setState] = useState<"loading" | "signed-out" | "no-access" | "ready">(
-    "loading",
-  );
+  const claimAdmin = useServerFn(claimAdminIfFirst);
+  const [state, setState] = useState<
+    "loading" | "signed-out" | "no-access" | "access-error" | "ready"
+  >("loading");
   const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<MediaItem[]>([]);
   const [busy, setBusy] = useState(false);
@@ -86,24 +88,45 @@ function AdminShell() {
   }, [t.adminLoadError]);
 
   const bootstrap = useCallback(async () => {
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) {
+    setState("loading");
+    setError(null);
+
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (!sessionData.session) {
       setState("signed-out");
       return;
     }
+
     try {
-      const result = await claimAdminIfFirst();
+      let result: Awaited<ReturnType<typeof claimAdmin>> | undefined;
+      let lastError: unknown;
+
+      // A newly-created browser session can take a moment to become available
+      // to the server-function middleware on hosted deployments.
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+          result = await claimAdmin();
+          break;
+        } catch (claimError) {
+          lastError = claimError;
+          if (attempt < 2) {
+            await new Promise((resolve) => window.setTimeout(resolve, 400 * (attempt + 1)));
+          }
+        }
+      }
+
+      if (!result) throw lastError;
       if (!result.isAdmin) {
         setState("no-access");
         return;
       }
     } catch {
-      setState("no-access");
+      setState("access-error");
       return;
     }
     setState("ready");
     await loadMedia();
-  }, [loadMedia]);
+  }, [claimAdmin, loadMedia]);
 
   useEffect(() => {
     void bootstrap();
@@ -139,6 +162,19 @@ function AdminShell() {
             }}
           >
             {t.signOut}
+          </button>
+        }
+      />
+    );
+  }
+
+  if (state === "access-error") {
+    return (
+      <CenteredNote
+        text={t.adminAccessError}
+        action={
+          <button type="button" className="btn-quiet mt-6" onClick={() => void bootstrap()}>
+            {t.retry}
           </button>
         }
       />
